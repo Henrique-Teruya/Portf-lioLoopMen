@@ -81,14 +81,36 @@ body {
 }
 
 .carrosel-SB {
-    overflow-x: auto;
     display: flex;
-    gap: 24px;
-    padding: 32px 64px;
-    border-radius: 24px;
-    overflow: hidden;
-    width: max-content;
-    padding-left: 1em;
+    align-items: center;
+    gap: 48px;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 16px;
+}
+
+.carrosel-SB .texto-intro {
+    flex: 1;
+    margin-top: 0;
+}
+
+.carrosel-SB .carrosel-item {
+    flex: 0 0 320px;
+}
+
+@media (max-width: 768px) {
+    .carrosel-SB {
+        flex-direction: column-reverse;
+        /* Put image on top or bottom, here text then image but column-reverse will put image first if it's after text? No, p then img. column-reverse makes it img then p. */
+        text-align: center;
+        gap: 24px;
+    }
+
+    .carrosel-SB .carrosel-item {
+        flex: 0 0 auto;
+        width: 100%;
+        max-width: 320px;
+    }
 }
 
 .carrosel-track::-webkit-scrollbar {
@@ -123,4 +145,284 @@ body {
     to {
         transform: translateX(-50%);
     }
+}
+
+.ticker {
+    overflow: hidden;
+    display: flex;
+    width: 100%;
+    background-color: var(--color-accent);
+    padding: 40px 0 60px 0;
+}
+
+.ticker__list {
+    display: flex;
+    margin-top: 20px;
+    animation: ticker 15s infinite linear;
+    background-color: #1FE3E3;
+    gap: 24px;
+    padding: 32px 16px;
+}
+
+.ticker:has(.ticker__item:hover) .ticker__list {
+    animation-play-state: paused;
+}
+
+.ticker__item {
+    margin-right: 20px;
+    width: 300px;
+    height: 300px;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.ticker__item:hover {
+    transform: scale(1.05);
+}
+
+.ticker__item a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+}
+
+.ticker__item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+@keyframes ticker {
+    100% {
+        transform: translateX(-100%);
+        /*try changing this to -100vw*/
+    }
+}
+
+/* Botão Trajetória */
+.btn-container {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0 80px 0;
+}
+
+.btn-trajetoria {
+    display: inline-block;
+    padding: 20px 48px;
+    background-color: var(--color-accent);
+    color: white;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 1.5rem;
+    border-radius: 16px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.btn-trajetoria:hover {
+    transform: scale(1.08);
+    /* Efeito de crescer */
+    background-color: #3b25cb;
+}
+
+/* Áreas de Atuação e Contato */
+.sections-final {
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+.lista-atuacao {
+    list-style-type: disc;
+    margin-left: 20px;
+    margin-top: 32px;
+    font-size: 1.2rem;
+    line-height: 1.8;
+}
+
+.lista-atuacao li {
+    margin-bottom: 8px;
+    color: var(--color-text);
+}
+
+.contato-container {
+    margin-top: 60px;
+}
+
+.Subtitulo-contato {
+    color: var(--color-muted);
+    font-size: 1.5rem;
+    margin-bottom: 24px;
+}
+
+.contato-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-decoration: none;
+    color: var(--color-text);
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    width: fit-content;
+    transition: transform 0.3s ease;
+}
+
+.contato-item:hover {
+    transform: scale(1.05);
+    /* Efeito de crescer suave */
+}
+
+.contato-icon {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    background-color: var(--color-background);
+    /* Fundo suave se as imagens forem transparentes */
+    border-radius: 8px;
+}
+
+.contato-item span {
+    font-weight: 500;
+}
+
+/* Ilustrações Page Grid Styles */
+.grid-ilustracoes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 32px;
+    margin-top: 40px;
+}
+
+.ilustracao-item,
+.estampa-item {
+    border-radius: 16px;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.ilustracao-item:hover,
+.estampa-item:hover {
+    transform: scale(1.03);
+}
+
+.ilustracao-item img,
+.estampa-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Ilustração de largura total (ou maior se desejado no Figma) */
+.ilustracao-item-wide {
+    grid-column: 1 / -1;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    margin: 20px 0;
+}
+
+.ilustracao-item-wide:hover {
+    transform: scale(1.02);
+}
+
+.ilustracao-item-wide img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Section Estampas */
+.section-estampas {
+    margin-top: 100px;
+    background: var(--color-background);
+    padding: 60px 0;
+}
+
+.grid-estampas {
+    display: grid;
+
+    gap: 40px;
+    margin: 40px auto 0;
+}
+
+.estampa-item img {
+    width: 100%;
+    height: auto;
+}
+
+/* Footer Navigation */
+.footer-nav {
+    padding: 60px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+.nav-arrow {
+    color: #1FE3E3;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.nav-arrow:hover {
+    transform: scale(1.2);
+    opacity: 0.8;
+}
+
+.nav-dots {
+    display: flex;
+    gap: 12px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    background-color: #555;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.dot.active {
+    background-color: #2E1C9E;
+    transform: scale(1.2);
+}
+
+/* Menu Icon (hamburger) */
+.menu-icon {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.menu-icon span {
+    width: 32px;
+    height: 3px;
+    background-color: var(--color-text);
+    border-radius: 2px;
+    transition: background-color 0.2s ease;
+}
+
+.menu-icon:hover span {
+    background-color: #1FE3E3;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
