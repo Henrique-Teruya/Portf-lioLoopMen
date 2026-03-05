@@ -22,32 +22,80 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Lightbox Logic ---
+    let currentGroup = [];
+    let currentIndex = 0;
 
     // 1. Criar o HTML do Lightbox dinamicamente
     const lightbox = document.createElement('div');
     lightbox.className = 'lightbox';
     lightbox.innerHTML = `
         <span class="lightbox-close">&times;</span>
+        <button class="lightbox-nav lightbox-prev">&lsaquo;</button>
         <img class="lightbox-content" src="" alt="View Enlarged">
+        <button class="lightbox-nav lightbox-next">&rsaquo;</button>
     `;
     document.body.appendChild(lightbox);
 
     const lightboxImg = lightbox.querySelector('.lightbox-content');
     const lightboxClose = lightbox.querySelector('.lightbox-close');
+    const prevBtn = lightbox.querySelector('.lightbox-prev');
+    const nextBtn = lightbox.querySelector('.lightbox-next');
 
     // 2. Selecionar todas as imagens que podem ser ampliadas
-    // Pegamos imagens dentro de itens de grid e estampas (ignora o ticker para manter o redirecionamento)
-    const galleryImages = document.querySelectorAll('.ilustracao-item img, .estampa-item img, .ilustracao-item-wide img');
+    const galleryImages = document.querySelectorAll('.ilustracao-item img, .estampa-item img, .ilustracao-item-wide img, .ticker__item img');
+
+    const updateLightbox = () => {
+        if (currentGroup.length > 0) {
+            const img = currentGroup[currentIndex];
+            lightboxImg.src = img.src;
+            // Mostrar/esconder botões baseado no índice
+            prevBtn.style.display = currentIndex > 0 ? 'block' : 'none';
+            nextBtn.style.display = currentIndex < currentGroup.length - 1 ? 'block' : 'none';
+        }
+    };
 
     galleryImages.forEach(img => {
         img.addEventListener('click', (e) => {
-            lightboxImg.src = img.src;
+            // Se estiver dentro de um link (ticker), evita o redirecionamento para abrir o zoom
+            if (img.closest('a')) {
+                e.preventDefault();
+            }
+
+            // Encontrar o grupo: o contêiner mais próximo que agrupa essas imagens
+            const container = img.closest('.grid-ilustracoes, .ticker__list, .certificados, .projeto-secao');
+            if (container) {
+                // Pegamos apenas as imagens que fazem parte da galeria dentro deste contêiner
+                currentGroup = Array.from(container.querySelectorAll('.ilustracao-item img, .estampa-item img, .ilustracao-item-wide img, .ticker__item img'));
+                currentIndex = currentGroup.indexOf(img);
+            } else {
+                currentGroup = [img];
+                currentIndex = 0;
+            }
+
+            updateLightbox();
             lightbox.classList.add('active');
             body.classList.add('lightbox-open');
         });
     });
 
-    // 3. Fechar o Lightbox
+    // 3. Navegação
+    prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (currentIndex > 0) {
+            currentIndex--;
+            updateLightbox();
+        }
+    });
+
+    nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (currentIndex < currentGroup.length - 1) {
+            currentIndex++;
+            updateLightbox();
+        }
+    });
+
+    // 4. Fechar o Lightbox
     const closeLightbox = () => {
         lightbox.classList.remove('active');
         body.classList.remove('lightbox-open');
@@ -60,15 +108,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Fechar com a tecla Esc
+    // Fechar com a tecla Esc e Navegação por setas
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-            closeLightbox();
-            if (menuOverlay.classList.contains('active')) {
+            if (lightbox.classList.contains('active')) {
+                closeLightbox();
+            } else if (menuOverlay && menuOverlay.classList.contains('active')) {
                 menuIcon.classList.remove('active');
                 menuOverlay.classList.remove('active');
                 body.classList.remove('menu-open');
             }
+            return;
+        }
+
+        if (!lightbox.classList.contains('active')) return;
+
+        if (e.key === 'ArrowLeft' && currentIndex > 0) {
+            currentIndex--;
+            updateLightbox();
+        } else if (e.key === 'ArrowRight' && currentIndex < currentGroup.length - 1) {
+            currentIndex++;
+            updateLightbox();
         }
     });
 });
