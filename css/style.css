@@ -120,16 +120,18 @@ body {
 
 @media (max-width: 768px) {
     .carrosel-SB {
-        flex-direction: column-reverse;
-        /* Put image on top or bottom, here text then image but column-reverse will put image first if it's after text? No, p then img. column-reverse makes it img then p. */
+        flex-direction: column;
+        /* Image on top */
         text-align: center;
-        gap: 24px;
+        gap: 2rem;
     }
 
     .carrosel-SB .carrosel-item {
         flex: 0 0 auto;
         width: 100%;
         max-width: 320px;
+        order: -1;
+        /* Forcing image to top regardless of HTML order */
     }
 }
 
@@ -187,16 +189,20 @@ body {
 
 
 @media (max-width: 768px) {
+    .ticker {
+        padding: 2rem 0 3rem 0;
+    }
+
     .ticker__list {
-        gap: 16px;
-        padding: 24px 12px;
+        gap: 1rem;
+        padding: 1.5rem 0.75rem;
     }
 }
 
 @media (max-width: 480px) {
     .ticker__list {
-        gap: 12px;
-        padding: 16px 8px;
+        gap: 0.75rem;
+        padding: 1rem 0.5rem;
     }
 }
 
@@ -206,9 +212,9 @@ body {
 
 .ticker__item {
     flex-shrink: 0;
-    width: clamp(70px, 20vw, 250px);
+    width: clamp(120px, 40vw, 250px);
     aspect-ratio: 1 / 1;
-    border-radius: 12px;
+    border-radius: 0.75rem;
     overflow: hidden;
     transition: transform 0.3s ease;
 }
@@ -450,21 +456,7 @@ body {
     filter: brightness(1.1);
 }
 
-/* Ajuste para os certificados preencherem o quadrado */
 .certificados .ilustracao-item {
-    aspect-ratio: 1 / 1;
-    width: 100%;
-    max-width: 100%;
-    max-height: 550px;
-    margin: 24px auto;
-}
-
-.certificados .ilustracao-item img {
-    object-fit: cover;
-}
-
-/* Ilustração de largura total (ou maior se desejado no Figma) */
-.ilustracao-item-wide {
     grid-column: 1 / -1;
     border-radius: 20px;
     overflow: hidden;
@@ -753,6 +745,7 @@ body.lightbox-open {
 .ilustracao-item img,
 .estampa-item img,
 .ilustracao-item-wide img,
+.highlight-item img,
 .ticker__item img {
     cursor: zoom-in;
 }
@@ -793,55 +786,62 @@ body.lightbox-open {
     flex-wrap: wrap;
     gap: 12px;
     justify-content: center;
-    align-items: center;
-    width: 100%;
 }
 
 .highlight-item {
-    height: 380px;
-    /* Consistent height like Lightroom */
-    display: flex;
-    justify-content: center;
-    transition: transform 0.3s ease;
-}
-
-.highlight-item:hover {
-    transform: scale(1.05);
+    height: clamp(200px, 40vh, 450px);
+    flex: 0 0 auto;
+    /* impede o flex de alterar a largura */
 }
 
 .highlight-item img {
     height: 100%;
     width: auto;
-    object-fit: contain;
-    border-radius: 4px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: filter 0.3s ease;
-    cursor: zoom-in;
+    object-fit: cover;
+    border-radius: 0.5rem;
 }
 
 .highlight-item:hover img {
     filter: brightness(1.1);
 }
 
-@media (max-width: 1024px) {
-    .highlight-item {
-        height: 300px;
-    }
-}
+@media (max-width: 1024px) {}
 
 @media (max-width: 768px) {
     .highlight-item {
-        height: auto;
-        width: 100%;
+        height: clamp(150px, 30vh, 250px);
+        /* Altura menor para o mobile, mantendo o feed */
     }
+}
 
-    .highlight-item img {
-        width: 100%;
-        height: auto;
-    }
+/* Certificados Styles */
+.certificados-section {
+    margin-top: 40px;
+    border-bottom: 2px solid #333;
+    padding-bottom: 60px;
+}
 
-    .highlights-feed {
-        gap: 15px;
-    }
+.certificado-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 32px;
+    width: 100%;
+}
+
+.certificado-item img {
+    max-width: 100%;
+    width: auto;
+    height: clamp(400px, 65vh, 900px);
+    /* Altura maior para certificados */
+    object-fit: contain;
+    /* Garante que o certificado seja lido sem cortes */
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    cursor: zoom-in;
+    transition: transform 0.3s ease;
+}
+
+.certificado-item img:hover {
+    transform: scale(1.02);
 }
