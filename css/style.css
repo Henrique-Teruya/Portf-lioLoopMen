@@ -831,10 +831,10 @@ body.lightbox-open {
 
 .certificado-item img {
     max-width: 100%;
-    width: auto;
-    height: clamp(400px, 65vh, 900px);
+    width: clamp(1200px, 40vw, 1920px);
+    height: clamp(600px, 65vh, 1080px);
     /* Altura maior para certificados */
-    object-fit: contain;
+    object-fit: cover;
     /* Garante que o certificado seja lido sem cortes */
     border-radius: 12px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
