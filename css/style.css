@@ -715,3 +715,67 @@ body.lightbox-open {
         font-size: 1.5rem;
     }
 }
+
+/* Highlights Section - Lightroom Style */
+.highlights-section {
+    margin-top: 20px;
+    margin-bottom: 80px;
+}
+
+.highlights-feed {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.highlight-item {
+    height: 380px;
+    /* Consistent height like Lightroom */
+    display: flex;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.highlight-item:hover {
+    transform: translateY(-5px);
+}
+
+.highlight-item img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: filter 0.3s ease;
+    cursor: zoom-in;
+}
+
+.highlight-item:hover img {
+    filter: brightness(1.1);
+}
+
+@media (max-width: 1024px) {
+    .highlight-item {
+        height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .highlight-item {
+        height: auto;
+        width: 100%;
+    }
+
+    .highlight-item img {
+        width: 100%;
+        height: auto;
+    }
+
+    .highlights-feed {
+        gap: 15px;
+    }
+}
