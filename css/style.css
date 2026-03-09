@@ -690,3 +690,28 @@ body.lightbox-open {
 .ticker__item img {
     cursor: zoom-in;
 }
+
+/* Video Page Styles */
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    border: 1px solid #333;
+    overflow: hidden;
+    background-color: #000;
+}
+
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+@media (max-width: 768px) {
+    .video-item h2.Titulo {
+        font-size: 1.5rem;
+    }
+}
