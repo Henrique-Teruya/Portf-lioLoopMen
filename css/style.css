@@ -381,6 +381,7 @@ body {
     background-color: var(--color-background);
     position: relative;
     border-radius: 16px;
+    overflow-wrap: break-word;
 }
 
 .timeline-content h1 {
